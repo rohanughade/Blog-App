@@ -12,13 +12,14 @@ import com.rohan.assignment.data.BlogDatabase
 import com.rohan.assignment.data.entity.BlogEntity
 import com.rohan.assignment.model.Response
 import com.rohan.assignment.paging.AssignMentPagingSource
+//import com.rohan.assignment.paging.AssignMentPagingSource
 import com.rohan.assignment.paging.BlogRemotemediator
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+@OptIn(ExperimentalPagingApi::class)
 
 class ARepositery @Inject constructor(val blogdb: BlogDatabase, val apiService: ApiService) {
-    @OptIn(ExperimentalPagingApi::class)
     fun getPostStream(): Flow<PagingData<BlogEntity>>{
         return Pager(
             config = PagingConfig(
@@ -30,7 +31,7 @@ class ARepositery @Inject constructor(val blogdb: BlogDatabase, val apiService: 
             ),
             remoteMediator = BlogRemotemediator(blogdb,apiService),
             pagingSourceFactory = {
-//                AssignMentPagingSource(apiService)
+              //  AssignMentPagingSource(apiService)
                 blogdb.dao.pagingSource()
             }
         ).flow

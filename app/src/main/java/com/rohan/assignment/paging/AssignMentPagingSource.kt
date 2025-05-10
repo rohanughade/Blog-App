@@ -2,18 +2,20 @@ package com.rohan.assignment.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.rohan.assignment.data.entity.BlogEntity
 import com.rohan.assignment.model.Response
 import com.rohan.assignment.network.ApiService
 import retrofit2.HttpException
 import java.io.IOException
 
 class AssignMentPagingSource(private val apiService: ApiService): PagingSource<Int, Response>() {
+
+
     override fun getRefreshKey(state: PagingState<Int, Response>): Int? {
         return state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
-        }
-    }
+        }    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Response> {
         val position = params.key?:1

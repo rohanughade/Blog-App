@@ -21,7 +21,7 @@ object Module {
 
     @Provides
     @Singleton
-    fun getDatabase(@ApplicationContext context: Context): BlogDatabase{
+    fun getDatabase(@ApplicationContext context: Context): BlogDatabase {
         return Room.databaseBuilder(
             context,
             BlogDatabase::class.java,
@@ -32,7 +32,7 @@ object Module {
 
     @Provides
     @Singleton
-    fun getRetrofit(): Retrofit{
+    fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -40,12 +40,8 @@ object Module {
     }
 
     @Provides
-    fun getApiService(retrofit: Retrofit):ApiService{
+    fun getApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
-
-    @Provides
-    fun getRepositery(apiService: ApiService,blogDatabase: BlogDatabase): ARepositery{
-        return ARepositery(blogDatabase,apiService)
-    }
 }
+

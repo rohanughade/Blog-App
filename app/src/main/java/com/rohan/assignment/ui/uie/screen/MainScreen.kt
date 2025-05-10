@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,14 +51,21 @@ fun mainScreen(viewModel: MainViewModel,onClick:(String)->Unit) {
             TopAppBar(
                 title = {
                     Text(text = "Blog App", style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold)
-                }
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        )
+
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFFFFFFFF)
+                )
 
             )
         }) {padding->
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(padding)){
+            .padding(padding)
+            .background(color = Color(0xFFFFFFFF))){
             val blogdata = viewModel.postData.collectAsLazyPagingItems()
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -149,8 +157,8 @@ fun blogItem(data: BlogEntity,onClick: (String) -> Unit) {
         modifier = Modifier
         .width(255.dp)
         .height(245.dp)
-            .background(color = Color(0xFFFAF9F6))
-        .padding(8.dp)
+
+            .padding(8.dp)
         .clickable(
             onClick = {
                 onClick(data.link)
@@ -170,7 +178,7 @@ fun blogItem(data: BlogEntity,onClick: (String) -> Unit) {
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .padding(8.dp)
+                    .fillMaxSize()
                     .clip(RoundedCornerShape(8.dp))
             )
 
@@ -226,7 +234,7 @@ fun verticle(data: BlogEntity,onClick: (String) -> Unit) {
             )
             Text(text = data.title,
                 style = MaterialTheme.typography.titleMedium,
-
+                color = Color.Black,
                 modifier = Modifier
                     .padding(8.dp))
 

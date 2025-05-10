@@ -1,5 +1,7 @@
 package com.rohan.assignment.network
 
+import androidx.paging.PagingSource
+import com.rohan.assignment.data.entity.BlogEntity
 import com.rohan.assignment.model.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

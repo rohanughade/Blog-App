@@ -2,6 +2,7 @@
 
 package com.rohan.assignment.paging
 
+import android.util.Log
 import retrofit2.HttpException
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -24,6 +25,7 @@ class BlogRemotemediator(
         state: PagingState<Int, BlogEntity>
     ): MediatorResult {
         return try{
+
             val loadkey = when(loadType){
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(
@@ -34,7 +36,9 @@ class BlogRemotemediator(
                     if (lastItem==null){
                         1
                     }else{
-                        (lastItem.id/state.config.pageSize)+1
+                        val itemCount = state.pages.sumOf { it.data.size }
+                        val nextPage = (itemCount/state.config.pageSize)+1
+                        nextPage
                     }
                 }
             }
@@ -51,7 +55,10 @@ class BlogRemotemediator(
                     it.toBlogEntity()
                 }
                 blogdb.dao.upsertAll(blogentity)
+
             }
+            Log.d("RemoteMediator", "Loaded page: $loadkey, items: ${blogs.size}")
+
             MediatorResult.Success(endOfPaginationReached = blogs.isEmpty())
         }catch (e: IOException){
             MediatorResult.Error(e)
