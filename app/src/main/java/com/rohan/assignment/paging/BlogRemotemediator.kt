@@ -57,7 +57,6 @@ class BlogRemotemediator(
                 blogdb.dao.upsertAll(blogentity)
 
             }
-            Log.d("RemoteMediator", "Loaded page: $loadkey, items: ${blogs.size}")
 
             MediatorResult.Success(endOfPaginationReached = blogs.isEmpty())
         }catch (e: IOException){
